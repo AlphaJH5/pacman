@@ -1,16 +1,5 @@
 ```js
-/*jslint browser: true, undef: true, eqeqeq: true, nomen: true, white: true */
-/*global window: false, document: false */
-
-/*
- * TODO: 
- * - Fix looped audio
- * - Add fruits, power-ups, levels
- * - Fix ghost mechanics (blinky/inky/pinky/clyde behaviors)
- * - Improve game over handling
- * - Add game score
- * - Add lives
- */
+```js
 
 const NONE        = 4; 
 const UP          = 3;
@@ -605,12 +594,7 @@ Pacman.Map = function (size) {
       ctx.stroke(); 
     }
   }
-  
-  Here is more of the fixed Pacman code:
-
-```js
-...
-
+	
 function reset() {       
   map    = Pacman.MAP.clone();
   height = map.length;
@@ -797,10 +781,6 @@ Pacman.Audio = function(game) {
     resume        
   };
 };
-Here is the rest of the Pacman code with fixes:
-
-```js
-...
 
 const PACMAN = (function() {
 
