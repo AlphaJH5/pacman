@@ -1,58 +1,29 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>HTML5 Pacman</title>
-    
-    <style type="text/css">
-      @font-face {
-	    font-family: 'BDCartoonShoutRegular';
-        src: url('BD_Cartoon_Shout-webfont.ttf') format('truetype');
-	    font-weight: normal;
-	    font-style: normal;
-      }
-      #pacman {
-        height:450px;
-        width:342px;
-        margin:20px auto;
-      }
-      #shim { 
-        font-family: BDCartoonShoutRegular; 
-        position:absolute;
-        visibility:hidden
-      }
-      h1 { font-family: BDCartoonShoutRegular; text-align:center; }
-      body { width:342px; margin:0px auto; font-family:sans-serif; }
-      a { text-decoration:none; }
-    </style>
+// no need to wait for the DOM, we live dangerously here
+const el = document.getElementById("pacman");
+const featureChecks = {
+  canvas: "dazzling and probably unnecessary page visuals",
+  localstorage: "creepily remember everything about you",
+  audio: "the sweet, sweet sounds of an 80's arcade",
+  'audio.ogg': "quality tunage",
+  'audio.mp3': "backup quality tunage"
+};
 
-</head>
-
-<body>
-  
-  <div id="shim">shim for font face</div>
-
-  <h1>HTML5 Pacman</h1>
-
-  <a href="http://arandomurl.com/">Writeup</a> |
-  Code on <a href="http://arandomurl.com/">Github</a>
-
-  <div id="pacman"></div>
-  <script src="pacman.js"></script>
-  <script src="modernizr-1.5.min.js"></script>
-
-  <script>
-
-    var el = document.getElementById("pacman");
-
-    if (Modernizr.canvas && Modernizr.localstorage && 
-        Modernizr.audio && (Modernizr.audio.ogg || Modernizr.audio.mp3)) {
-      window.setTimeout(function () { PACMAN.init(el, "./"); }, 0);
-    } else { 
-      el.innerHTML = "Sorry, needs a decent browser<br /><small>" + 
-        "(firefox 3.6+, Chrome 4+, Opera 10+ and Safari 4+)</small>";
+function canHazFeatures() {
+  return Object.entries(featureChecks).every(([feature, desc]) => {
+    let propExists = feature.includes('.') ? Modernizr[feature.split('.')[0]][feature.split('.')[1]] : Modernizr[feature];
+    if (!propExists) {
+      showSorryMessage(feature, desc);
     }
-  </script>
+    return propExists;
+  });
+}
 
-</body>
-</html>
+function showSorryMessage(missingFeature, description) {
+  el.innerHTML += `You're missing out on: ${description}.<br>`;
+}
+
+if (canHazFeatures()) {
+  window.setTimeout(() => PACMAN.init(el, "./"), 0);
+} else {
+  el.innerHTML += "<br><small>(Upgrade your browser, granddad! firefox 3.6+, Chrome 4+, Opera 10+ and Safari 4+)</small>";
+}
