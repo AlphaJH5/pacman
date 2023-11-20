@@ -1,5 +1,3 @@
-Here is the Pacman code with some fixes to improve it:
-
 ```js
 /*jslint browser: true, undef: true, eqeqeq: true, nomen: true, white: true */
 /*global window: false, document: false */
